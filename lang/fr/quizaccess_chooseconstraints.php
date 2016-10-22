@@ -17,11 +17,10 @@
 /**
  * Strings for the quizaccess_password plugin.
  *
- * @package     quizaccess_chooseconstraints
- * @category    quizaccess
- * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package    quizaccess
+ * @subpackage chooseconstraints
+ * @copyright  2016 Valery Fremaux
+ * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -33,3 +32,4 @@ $string['randomconstrainedquestionstoquiz'] = ' question(s) à contrainte au qui
 $string['choicerootcategory'] = 'Choisir la catégorie racine des révisions';
 $string['choicedeepness'] = 'Définir la profondeur de l\'arbre de révision';
 $string['enable'] = 'Activer le choix utilisateur';
+

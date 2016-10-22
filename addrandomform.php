@@ -17,15 +17,16 @@
 /**
  * Defines the Moodle forum used to add random questions to the quiz.
  *
- * @package     quizaccess_chooseconstraints
- * @category    quizaccess
- * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_quiz
+ * @copyright 2008 Olli Savolainen
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
+
 
 /**
  * The add random questions form.
@@ -43,8 +44,7 @@ class quiz_add_randomconstrained_form extends moodleform {
         $mform->addElement('select', 'randomcount', get_string('add', 'quizaccess_chooseconstraints'), $options);
         $mform->disabledIf('randomcount', 'disabled', 'eq', 1);
 
-        $label = get_string('randomconstrainedquestionstoquiz', 'quizaccess_chooseconstraints');
-        $mform->addElement('submit', 'addrandomconstrained', $label);
+        $mform->addElement('submit', 'addrandomconstrained', get_string('randomconstrainedquestionstoquiz', 'quizaccess_chooseconstraints'));
         $mform->disabledIf('addrandomconstrained', 'disabled', 'eq', 1);
 
         $mform->addElement('hidden', 'addonpage', 0, 'id="rform_qpage"');

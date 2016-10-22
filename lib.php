@@ -1,26 +1,4 @@
 <?php
-// This file is part of Moodle - http://moodle.org/
-//
-// Moodle is free software: you can redistribute it and/or modify
-// it under the terms of the GNU General Public License as published by
-// the Free Software Foundation, either version 3 of the License, or
-// (at your option) any later version.
-//
-// Moodle is distributed in the hope that it will be useful,
-// but WITHOUT ANY WARRANTY; without even the implied warranty of
-// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-// GNU General Public License for more details.
-//
-// You should have received a copy of the GNU General Public License
-// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
-
-/**
- * @package     quizaccess_chooseconstraints
- * @category    quizaccess
- * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
 
 /**
  * Add a random question to the quiz at a given point.
@@ -33,29 +11,17 @@
 function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
     global $DB;
 
-    /*
-     * Find existing random questions in this category that are
-     * not used by any quiz.
-     */
-     $sql = "
-        SELECT
-            q.id,
-            q.qtype
-        FROM
-            {question} q
-        WHERE
-            qtype = 'randomconstrained' AND
-            category = 1 AND
-            NOT EXISTS (
-                SELECT
-                    *
-                FROM
-                    {quiz_slots}
-                WHERE
-                    questionid = q.id)
-        ORDER BY id
-    ";
-    if ($existingquestions = $DB->get_records_sql ($sql)) {
+    // Find existing random questions in this category that are
+    // not used by any quiz.
+    if ($existingquestions = $DB->get_records_sql(
+            "SELECT q.id, q.qtype FROM {question} q
+            WHERE qtype = 'randomconstrained'
+                AND category = 1
+                AND NOT EXISTS (
+                        SELECT *
+                          FROM {quiz_slots}
+                         WHERE questionid = q.id)
+            ORDER BY id")) {
         // Take as many of these as needed.
         while (($existingquestion = array_shift($existingquestions)) && $number > 0) {
             quiz_add_quiz_question($existingquestion->id, $quiz, $addonpage);
@@ -132,6 +98,7 @@ function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $att
                 $questiondata->options->shuffleanswers = false;
             }
             $question = question_bank::make_question($questiondata);
+
         } else {
             if (!isset($questionids[$quba->next_slot_number()])) {
                 $forcequestionid = null;
