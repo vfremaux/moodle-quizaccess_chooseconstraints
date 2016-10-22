@@ -17,17 +17,16 @@
 /**
  * Implementaton of the quizaccess_chooseconstraints plugin.
  *
- * @package    quizaccess
- * @subpackage chooseconstraints
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/quiz/accessrule/accessrulebase.php');
-require_once($CFG->dirroot . '/mod/quiz/accessrule/chooseconstraints/lib.php');
+require_once($CFG->dirroot.'/mod/quiz/accessrule/accessrulebase.php');
+require_once($CFG->dirroot.'/mod/quiz/accessrule/chooseconstraints/lib.php');
 
 /**
  * A rule implementing the constraint check.
@@ -52,7 +51,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
     public function is_preflight_check_required($attemptid) {
         global $DB, $SESSION;
 
-        // check  this rule is enabled for this quiz
+        // Check this rule is enabled for this quiz.
         if (!$this->is_enabled()) {
             return false;
         }
@@ -82,7 +81,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
         $thiscontext = context_course::instance($COURSE->id);
         $contexts = new question_edit_contexts($thiscontext);
 
-        if ($categoriesarray = question_category_options($contexts->all(), true, 0, false, -1)){
+        if ($categoriesarray = question_category_options($contexts->all(), true, 0, false, -1)) {
             foreach ($categoriesarray as $catname => $catsection) {
                 $i = 0;
                 foreach ($catsection as $key => $cat) {
@@ -167,7 +166,9 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
      *        plugin name, to avoid collisions.
      */
     public static function get_settings_sql($quizid) {
-        return array('qacs.choicerootcategory, qacs.choicedeepness, qacs.enabled as choicerootenabled', 'LEFT JOIN {qa_chooseconstraints_quiz} qacs ON qacs.quizid = quiz.id ', array());
+        return array('qacs.choicerootcategory, qacs.choicedeepness, qacs.enabled as choicerootenabled',
+                     'LEFT JOIN {qa_chooseconstraints_quiz} qacs ON qacs.quizid = quiz.id ',
+                     array());
     }
 
     public function add_preflight_check_form_fields(mod_quiz_preflight_check_form $quizform, MoodleQuickForm $mform, $attemptid) {
@@ -175,8 +176,10 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
 
         $mform->addElement('header', 'userconstraintsheader', get_string('chooseconstraints', 'quizaccess_chooseconstraints'));
 
-        // Don't use the 'proper' field name of 'password' since that get's
-        // Firefox's password auto-complete over-excited.
+        /*
+         * Don't use the 'proper' field name of 'password' since that get's
+         * Firefox's password auto-complete over-excited.
+         */
         $thiscontext = context_course::instance($COURSE->id);
         $contexts = new question_edit_contexts($thiscontext);
         $categories = array();

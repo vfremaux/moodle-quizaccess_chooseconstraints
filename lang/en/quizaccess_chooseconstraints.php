@@ -17,10 +17,11 @@
 /**
  * Strings for the quizaccess_password plugin.
  *
- * @package    quizaccess
- * @subpackage chooseconstraints
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
