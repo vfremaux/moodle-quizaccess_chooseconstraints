@@ -27,10 +27,10 @@
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2016062300;
-$plugin->requires  = 2015050500;
+$plugin->requires  = 2015111000;
 $plugin->component = 'quizaccess_chooseconstraints';
-$plugin->release = '2.9.0 Build(2016062300)';
+$plugin->release = '3.0.0 Build(2016062300)';
 $plugin->maturity = MATURITY_BETA;
 
 // Non moodle attributes.
-$plugin->codeincrement = '2.9.0000';
+$plugin->codeincrement = '3.0.0000';
