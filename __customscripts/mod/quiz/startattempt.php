@@ -132,9 +132,7 @@ if (!$quizobj->is_preview_user() && $messages) {
             $output->access_messages($messages));
 }
 
-debug_trace('Ask preflight on '.$currentattemptid);
 if ($accessmanager->is_preflight_check_required($currentattemptid)) {
-    debug_trace('Check preflight');
     // Need to do some checks before allowing the user to continue.
     $mform = $accessmanager->get_preflight_check_form(
             $quizobj->start_attempt_url($page), $currentattemptid);
@@ -179,7 +177,6 @@ $quba->set_preferred_behaviour($quizobj->get_quiz()->preferredbehaviour);
 // Create the new attempt and initialize the question sessions
 $timenow = time(); // Update time now, in case the server is running really slowly.
 
-debug_trace("Creating attempt ");
 $attempt = quiz_create_attempt($quizobj, $attemptnumber, $lastattempt, $timenow, $quizobj->is_preview_user());
 
 if (!($quizobj->get_quiz()->attemptonlast && $lastattempt)) {
@@ -195,18 +192,18 @@ $transaction = $DB->start_delegated_transaction();
 debug_trace("saving attempt ".print_r($attempt, true));
 $attempt = quiz_attempt_save_started($quizobj, $quba, $attempt);
 
-// CHANGE
+// CHANGE+
+// Required by quizaccess_chooseconstraints plugin.
 // This is a second chance when having a late $attempt id assignation.
 $quiz = $quizobj->get_quiz();
 if ($DB->get_field('qa_chooseconstraints_quiz', 'enabled', array('quizid' => $quiz->id))) {
     debug_trace("Saving constraints $attemptnumber $lastattempt ".print_r($attempt, true));
     quiz_get_save_constraints($attempt, $quiz);
 }
-// /CHANGE
+// /CHANGE-
 
 $transaction->allow_commit();
 
 // Redirect to the attempt page.
-debug_trace("Redirect to attempt page $attempt->id");
 redirect($quizobj->attempt_url($attempt->id, $page));
 die;
