@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/quiz/accessrule/chooseconstraints/db" VERSION="20121006" COMMENT="XMLDB file for Moodle quizaccessrule choose constraints"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="qa_chooseconstraints_quiz" COMMENT="Additional quiz attributes.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="Standard Moodle primary key."/>
+        <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key reference to the quiz instance."/>
+        <FIELD NAME="enabled" TYPE="int" LENGTH="1" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Enables rule."/>
+        <FIELD NAME="choicerootcategory" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Root category for question shoice"/>
+        <FIELD NAME="choicedeepness" TYPE="char" SIZE="255" NOTNULL="false" SEQUENCE="false" COMMENT="Deepness"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="quiz_ix" UNIQUE="false" FIELDS="quizid"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="qa_chooseconstraints_attempt" COMMENT="Additional quiz attributes.">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" SEQUENCE="true" COMMENT="Standard Moodle primary key."/>
+        <FIELD NAME="quizid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key reference to the quiz. easier cleanup."/>
+        <FIELD NAME="attemptid" TYPE="int" LENGTH="10" NOTNULL="true" DEFAULT="0" SEQUENCE="false" COMMENT="Foreign key reference to the attempt instance."/>
+        <FIELD NAME="categories" TYPE="char" LENGTH="255" NOTNULL="true" SEQUENCE="false" COMMENT="Choosen categories"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="quiz_ix" UNIQUE="false" FIELDS="quizid"/>
+        <INDEX NAME="attempt_ix" UNIQUE="false" FIELDS="attemptid"/>
+      </INDEXES>
+    </TABLE>
+  </TABLES>
+</XMLDB>
