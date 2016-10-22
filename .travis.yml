@@ -24,7 +24,7 @@ before_install:
   - export PATH="$(cd ci/bin; pwd):$(cd ci/vendor/bin; pwd):$PATH"
 
 install:
-  - moodle-plugin-ci plugin-install --branch $MOODLE_BRANCH vfremaux/moodle-qtype_randomconstrained
+  - moodle-plugin-ci install-plugin --branch $MOODLE_BRANCH vfremaux/moodle-qtype_randomconstrained
   - moodle-plugin-ci install
 
 script:
