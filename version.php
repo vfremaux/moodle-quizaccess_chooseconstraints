@@ -20,17 +20,17 @@
  * @package     quizaccess_chooseconstraints
  * @category    quizaccess
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   2016 Valery Fremaux
+ * @copyright   (C) 2016 onwards Valery Fremaux
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $plugin->version   = 2016062300;
-$plugin->requires  = 2016051900;
+$plugin->requires  = 2014050800;
 $plugin->component = 'quizaccess_chooseconstraints';
-$plugin->release = '3.1.0 Build(2016062300)';
+$plugin->release = '2.7.0 Build(2016062300)';
 $plugin->maturity = MATURITY_BETA;
 
 // Non moodle attributes.
-$plugin->codeincrement = '3.1.0000';
+$plugin->codeincrement = '2.7.0000';
