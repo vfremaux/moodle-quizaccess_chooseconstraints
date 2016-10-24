@@ -94,10 +94,12 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
                 }
             }
         }
-        $mform->addElement('select', 'choicerootcategory', get_string('choicerootcategory', 'quizaccess_chooseconstraints'), $qoptions);
+        $label = get_string('choicerootcategory', 'quizaccess_chooseconstraints');
+        $mform->addElement('select', 'choicerootcategory', $label, $qoptions);
 
-        $doptions = array('0' => get_string('unlimited'),'1' => 1, '2' => 2, '3' => 3);
-        $mform->addElement('select', 'choicedeepness', get_string('choicedeepness', 'quizaccess_chooseconstraints'), $doptions);
+        $doptions = array('0' => get_string('unlimited'), '1' => 1, '2' => 2, '3' => 3);
+        $label = get_string('choicedeepness', 'quizaccess_chooseconstraints');
+        $mform->addElement('select', 'choicedeepness', $label, $doptions);
     }
 
     /**
@@ -212,7 +214,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
 
         if ($attemptid) {
             $attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid));
-    
+
             if (!$attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid))) {
                 $attempt = new StdClass;
                 $attempt->attemptid = $attemptid;
