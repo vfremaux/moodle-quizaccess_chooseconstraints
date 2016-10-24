@@ -28,8 +28,8 @@ require_once($CFG->dirroot.'/mod/quiz/accessrule/chooseconstraints/lib.php');
 require_once($CFG->dirroot.'/mod/quiz/editlib.php');
 require_once($CFG->dirroot.'/question/category_class.php');
 
-list($url, $contexts, $cmid, $cm, $quiz, $pagevars) =
-        question_edit_setup('editq', '/mod/quiz/accessrule/chooseconstraints/addquestion.php', true);
+$result = question_edit_setup('editq', '/mod/quiz/accessrule/chooseconstraints/addquestion.php', true);
+list($url, $contexts, $cmid, $cm, $quiz, $pagevars) = $result;
 
 require_capability('mod/quiz:manage', $contexts->lowest());
 

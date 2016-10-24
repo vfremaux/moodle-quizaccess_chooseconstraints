@@ -21,6 +21,7 @@
  * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+defined('MOODLE_INTERNAL') || die();
 
 /**
  * Add a random question to the quiz at a given point.
@@ -150,7 +151,6 @@ function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $att
         $quba->add_question($question, $questiondata->maxmark);
         $questionsinuse[] = $question->id;
     }
-
 
     // Start all the questions.
     if ($attempt->preview) {
