@@ -1,4 +1,18 @@
 <?php
+// This file is part of Moodle - http://moodle.org/
+//
+// Moodle is free software: you can redistribute it and/or modify
+// it under the terms of the GNU General Public License as published by
+// the Free Software Foundation, either version 3 of the License, or
+// (at your option) any later version.
+//
+// Moodle is distributed in the hope that it will be useful,
+// but WITHOUT ANY WARRANTY; without even the implied warranty of
+// MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+// GNU General Public License for more details.
+//
+// You should have received a copy of the GNU General Public License
+// along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
  * Add a random question to the quiz at a given point.
@@ -8,20 +22,37 @@
  * @param int $number the number of random questions to add.
  * @param bool $includesubcategories whether to include questoins from subcategories.
  */
+
+defined('MOODLE_INTERNAL') || die;
+
+require_once($CFG->dirroot.'/mod/quiz/locallib.php');
+
 function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
     global $DB;
 
-    // Find existing random questions in this category that are
-    // not used by any quiz.
-    if ($existingquestions = $DB->get_records_sql(
-            "SELECT q.id, q.qtype FROM {question} q
-            WHERE qtype = 'randomconstrained'
-                AND category = 1
-                AND NOT EXISTS (
-                        SELECT *
-                          FROM {quiz_slots}
-                         WHERE questionid = q.id)
-            ORDER BY id")) {
+    /*
+     * Find existing random questions in this category that are
+     * not used by any quiz.
+     */
+    $sql = "
+        SELECT
+            q.id,
+            q.qtype
+        FROM
+            {question} q
+        WHERE
+            qtype = 'randomconstrained' AND
+            category = 1 AND
+            NOT EXISTS (
+                SELECT
+                    *
+                FROM
+                    {quiz_slots}
+                WHERE
+                    questionid = q.id)
+            ORDER BY id
+    ";
+    if ($existingquestions = $DB->get_records_sql($sql)) {
         // Take as many of these as needed.
         while (($existingquestion = array_shift($existingquestions)) && $number > 0) {
             quiz_add_quiz_question($existingquestion->id, $quiz, $addonpage);
