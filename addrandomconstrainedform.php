@@ -18,15 +18,13 @@
  * Defines the Moodle forum used to add random questions to the quiz.
  *
  * @package   mod_quiz
- * @copyright 2008 Olli Savolainen
+ * @copyright 2016 Valery Fremaux
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->libdir.'/formslib.php');
-
 
 /**
  * The add random questions form.
@@ -53,6 +51,8 @@ class quiz_add_randomconstrained_form extends moodleform {
         $mform->setType('cmid', PARAM_INT);
         $mform->addElement('hidden', 'disabled', 0);
         $mform->setType('disabled', PARAM_INT);
+        $mform->addElement('hidden', 'returnurl', 0);
+        $mform->setType('returnurl', PARAM_LOCALURL);
     }
 }
 

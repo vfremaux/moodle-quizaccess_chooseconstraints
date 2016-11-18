@@ -17,17 +17,16 @@
 /**
  * Implementaton of the quizaccess_chooseconstraints plugin.
  *
- * @package    quizaccess
- * @subpackage chooseconstraints
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @copyright   2016 Valery Fremaux
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/mod/quiz/accessrule/accessrulebase.php');
-require_once($CFG->dirroot . '/mod/quiz/accessrule/chooseconstraints/lib.php');
+require_once($CFG->dirroot.'/mod/quiz/accessrule/accessrulebase.php');
+require_once($CFG->dirroot.'/mod/quiz/accessrule/chooseconstraints/lib.php');
 
 /**
  * A rule implementing the constraint check.
@@ -52,7 +51,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
     public function is_preflight_check_required($attemptid) {
         global $DB, $SESSION;
 
-        // check  this rule is enabled for this quiz
+        // Check  this rule is enabled for this quiz.
         if (!$this->is_enabled()) {
             return false;
         }
@@ -66,7 +65,9 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
             // Secure the constraints submissions.
             require_sesskey();
             $SESSION->qa_constraints = $constraints;
-            debug_trace("Setting constraints in session : ".$SESSION->qa_constraints);
+            if (function_exists('debug_trace')) {
+                debug_trace("Setting constraints in session : ".$SESSION->qa_constraints);
+            }
             return false;
         }
 
@@ -175,8 +176,6 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
 
         $mform->addElement('header', 'userconstraintsheader', get_string('chooseconstraints', 'quizaccess_chooseconstraints'));
 
-        // Don't use the 'proper' field name of 'password' since that get's
-        // Firefox's password auto-complete over-excited.
         $thiscontext = context_course::instance($COURSE->id);
         $contexts = new question_edit_contexts($thiscontext);
         $categories = array();
