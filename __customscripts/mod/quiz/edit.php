@@ -41,12 +41,11 @@
 
 
 // require_once(__DIR__ . '/../../config.php');
-echo "CUSTOMIZED";
-require_once($CFG->dirroot . '/mod/quiz/locallib.php');
-require_once($CFG->dirroot . '/mod/quiz/addrandomform.php');
-require_once($CFG->dirroot . '/question/editlib.php');
-require_once($CFG->dirroot . '/question/category_class.php');
-require_once($CFG->dirroot . '/customscripts/mod/quiz/classes/output/edit_renderer.php');
+require_once($CFG->dirroot.'/mod/quiz/locallib.php');
+require_once($CFG->dirroot.'/mod/quiz/addrandomform.php');
+require_once($CFG->dirroot.'/question/editlib.php');
+require_once($CFG->dirroot.'/question/category_class.php');
+require_once($CFG->dirroot.'/customscripts/mod/quiz/classes/output/edit_renderer.php');
 
 /*
  * These params are only passed from page request to request while we stay on
