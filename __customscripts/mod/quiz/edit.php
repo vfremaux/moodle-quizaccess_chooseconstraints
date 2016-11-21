@@ -39,7 +39,6 @@
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-
 // require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot.'/mod/quiz/locallib.php');
 require_once($CFG->dirroot.'/mod/quiz/addrandomform.php');
@@ -202,7 +201,7 @@ $numberoflisteners = $DB->get_field_sql("
      WHERE quizid = ?", array($quiz->id));
 
 for ($pageiter = 1; $pageiter <= $numberoflisteners; $pageiter++) {
-    $quizeditconfig->dialoglisteners[] = 'addrandomdialoglaunch_' . $pageiter;
+    $quizeditconfig->dialoglisteners[] = 'addrandomdialoglaunch_'.$pageiter;
 }
 
 $PAGE->requires->data_for_js('quiz_edit_config', $quizeditconfig);
