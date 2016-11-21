@@ -83,7 +83,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
         $thiscontext = context_course::instance($COURSE->id);
         $contexts = new question_edit_contexts($thiscontext);
 
-        if ($categoriesarray = question_category_options($contexts->all(), true, 0, false, -1)){
+        if ($categoriesarray = question_category_options($contexts->all(), true, 0, false, -1)) {
             foreach ($categoriesarray as $catname => $catsection) {
                 $i = 0;
                 foreach ($catsection as $key => $cat) {
@@ -96,10 +96,12 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
                 }
             }
         }
-        $mform->addElement('select', 'choicerootcategory', get_string('choicerootcategory', 'quizaccess_chooseconstraints'), $qoptions);
+        $label = get_string('choicerootcategory', 'quizaccess_chooseconstraints');
+        $mform->addElement('select', 'choicerootcategory', $label, $qoptions);
 
-        $doptions = array('0' => get_string('unlimited'),'1' => 1, '2' => 2, '3' => 3);
-        $mform->addElement('select', 'choicedeepness', get_string('choicedeepness', 'quizaccess_chooseconstraints'), $doptions);
+        $doptions = array('0' => get_string('unlimited'), '1' => 1, '2' => 2, '3' => 3);
+        $label = get_string('choicedeepness', 'quizaccess_chooseconstraints');
+        $mform->addElement('select', 'choicedeepness', $label, $doptions);
     }
 
     /**
@@ -168,13 +170,15 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
      *        plugin name, to avoid collisions.
      */
     public static function get_settings_sql($quizid) {
-        return array('qacs.choicerootcategory, qacs.choicedeepness, qacs.enabled as choicerootenabled', 'LEFT JOIN {qa_chooseconstraints_quiz} qacs ON qacs.quizid = quiz.id ', array());
+        $joinclause = 'LEFT JOIN {qa_chooseconstraints_quiz} qacs ON qacs.quizid = quiz.id ';
+        return array('qacs.choicerootcategory, qacs.choicedeepness, qacs.enabled as choicerootenabled', $joinclause, array());
     }
 
     public function add_preflight_check_form_fields(mod_quiz_preflight_check_form $quizform, MoodleQuickForm $mform, $attemptid) {
         global $COURSE;
 
-        $mform->addElement('header', 'userconstraintsheader', get_string('chooseconstraints', 'quizaccess_chooseconstraints'));
+        $label = get_string('chooseconstraints', 'quizaccess_chooseconstraints');
+        $mform->addElement('header', 'userconstraintsheader', $label);
 
         $thiscontext = context_course::instance($COURSE->id);
         $contexts = new question_edit_contexts($thiscontext);
@@ -208,7 +212,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
 
         if ($attemptid) {
             $attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid));
-    
+
             if (!$attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid))) {
                 $attempt = new StdClass;
                 $attempt->attemptid = $attemptid;

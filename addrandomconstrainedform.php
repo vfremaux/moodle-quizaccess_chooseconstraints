@@ -35,14 +35,15 @@ require_once($CFG->libdir.'/formslib.php');
 class quiz_add_randomconstrained_form extends moodleform {
 
     protected function definition() {
-        global $CFG, $DB;
+
         $mform =& $this->_form;
 
         $options = array(1 => 1, 2 => 2, 3 => 3, 4 => 4, 5 => 5, 6 => 6, 7 => 7, 8 => 8, 9 => 9, 10 => 10);
         $mform->addElement('select', 'randomcount', get_string('add', 'quizaccess_chooseconstraints'), $options);
         $mform->disabledIf('randomcount', 'disabled', 'eq', 1);
 
-        $mform->addElement('submit', 'addrandomconstrained', get_string('randomconstrainedquestionstoquiz', 'quizaccess_chooseconstraints'));
+        $label = get_string('randomconstrainedquestionstoquiz', 'quizaccess_chooseconstraints');
+        $mform->addElement('submit', 'addrandomconstrained', $label);
         $mform->disabledIf('addrandomconstrained', 'disabled', 'eq', 1);
 
         $mform->addElement('hidden', 'addonpage', 0, 'id="rform_qpage"');

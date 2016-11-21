@@ -26,8 +26,8 @@ require_once($CFG->dirroot . '/mod/quiz/lib.php');
 require_once($CFG->dirroot . '/question/editlib.php');
 require_once($CFG->dirroot . '/question/category_class.php');
 
-list($url, $contexts, $cmid, $cm, $quiz, $pagevars) =
-        question_edit_setup('editq', '/mod/quiz/accessrule/chooseconstraints/addrandomconstrained.php', true);
+$formurl = '/mod/quiz/accessrule/chooseconstraints/addrandomconstrained.php';
+list($url, $contexts, $cmid, $cm, $quiz, $pagevars) = question_edit_setup('editq', $formurl, true);
 
 require_capability('mod/quiz:manage', $contexts->lowest());
 

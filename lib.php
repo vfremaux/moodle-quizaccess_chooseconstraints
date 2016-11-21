@@ -149,7 +149,6 @@ function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $att
         $questionsinuse[] = $question->id;
     }
 
-
     // Start all the questions.
     if ($attempt->preview) {
         $variantoffset = rand(1, 100);
