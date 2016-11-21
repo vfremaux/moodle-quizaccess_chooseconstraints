@@ -26,6 +26,7 @@
  */
 
 
+require_once(dirname(__FILE__) . '/../../config.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/report/reportlib.php');
 
@@ -53,13 +54,6 @@ $PAGE->set_url($attemptobj->review_url(null, $page, $showall));
 // Check login.
 require_login($attemptobj->get_course(), false, $attemptobj->get_cm());
 $attemptobj->check_review_capability();
-
-// CHANGE
-if (is_dir($CFG->dirroot.'/blocks/userquiz_monitor')) {
-    require_once($CFG->dirroot.'/blocks/userquiz_monitor/xlib.php');
-    check_userquiz_monitor_review_applicability($attemptobj);
-}
-// CHANGE
 
 // Create an object to manage all the other (non-roles) access rules.
 $accessmanager = $attemptobj->get_access_manager(time());
@@ -266,5 +260,3 @@ echo $output->review_page($attemptobj, $slots, $page, $showall, $lastpage, $opti
 
 // Trigger an event for this review.
 $attemptobj->fire_attempt_reviewed_event();
-
-die();

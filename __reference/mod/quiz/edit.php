@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
  * Page to edit quizzes
  *
@@ -40,31 +41,27 @@
  */
 
 
-// require_once(__DIR__ . '/../../config.php');
-echo "CUSTOMIZED";
+require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/addrandomform.php');
 require_once($CFG->dirroot . '/question/editlib.php');
 require_once($CFG->dirroot . '/question/category_class.php');
-require_once($CFG->dirroot . '/customscripts/mod/quiz/classes/output/edit_renderer.php');
 
-/*
- * These params are only passed from page request to request while we stay on
- * this page otherwise they would go in question_edit_setup.
- */
+// These params are only passed from page request to request while we stay on
+// this page otherwise they would go in question_edit_setup.
 $scrollpos = optional_param('scrollpos', '', PARAM_INT);
 
-list($thispageurl, $contexts, $cmid, $cm, $quiz, $pagevars) = question_edit_setup('editq', '/mod/quiz/edit.php', true);
+list($thispageurl, $contexts, $cmid, $cm, $quiz, $pagevars) =
+        question_edit_setup('editq', '/mod/quiz/edit.php', true);
 
 $defaultcategoryobj = question_make_default_categories($contexts->all());
-$defaultcategory = $defaultcategoryobj->id.','.$defaultcategoryobj->contextid;
+$defaultcategory = $defaultcategoryobj->id . ',' . $defaultcategoryobj->contextid;
 
 $quizhasattempts = quiz_has_attempts($quiz->id);
 
 $PAGE->set_url($thispageurl);
 
 // Get the course object and related bits.
-
 $course = $DB->get_record('course', array('id' => $quiz->course), '*', MUST_EXIST);
 $quizobj = new quiz($quiz, $cm, $course);
 $structure = $quizobj->get_structure();
@@ -125,8 +122,7 @@ if (optional_param('add', false, PARAM_BOOL) && confirm_sesskey()) {
     $addonpage = optional_param('addonpage', 0, PARAM_INT);
     // Add selected questions to the current quiz.
     $rawdata = (array) data_submitted();
-    foreach ($rawdata as $key => $value) {
-        // Parse input for question ids.
+    foreach ($rawdata as $key => $value) { // Parse input for question ids.
         if (preg_match('!^q([0-9]+)$!', $key, $matches)) {
             $key = $matches[1];
             quiz_require_question_use($key);
@@ -183,7 +179,7 @@ $questionbank->process_actions($thispageurl, $cm);
 $PAGE->set_pagelayout('incourse');
 $PAGE->set_pagetype('mod-quiz-edit');
 
-$output = $PAGE->get_renderer('mod_quiz', 'edit_constrained');
+$output = $PAGE->get_renderer('mod_quiz', 'edit');
 
 $PAGE->set_title(get_string('editingquizx', 'quiz', format_string($quiz->name)));
 $PAGE->set_heading($course->fullname);
@@ -218,5 +214,3 @@ echo $output->edit_page($quizobj, $structure, $contexts, $thispageurl, $pagevars
 echo html_writer::end_tag('div');
 
 echo $OUTPUT->footer();
-
-die;
