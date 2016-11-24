@@ -19,10 +19,10 @@
  *
  * @package     quizaccess_chooseconstraints
  * @category    quizaccess
- * @copyright   2016 Valery Fremaux
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/mod/quiz/accessrule/accessrulebase.php');
@@ -51,7 +51,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
     public function is_preflight_check_required($attemptid) {
         global $DB, $SESSION;
 
-        // Check  this rule is enabled for this quiz.
+        // Check this rule is enabled for this quiz.
         if (!$this->is_enabled()) {
             return false;
         }

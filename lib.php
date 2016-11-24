@@ -15,6 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
+defined('MOODLE_INTERNAL') || die();
+
+/**
  * Add a random question to the quiz at a given point.
  * @param object $quiz the quiz settings.
  * @param int $addonpage the page on which to add the question.
@@ -22,8 +31,6 @@
  * @param int $number the number of random questions to add.
  * @param bool $includesubcategories whether to include questoins from subcategories.
  */
-
-defined('MOODLE_INTERNAL') || die;
 
 require_once($CFG->dirroot.'/mod/quiz/locallib.php');
 
@@ -50,7 +57,7 @@ function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
                     {quiz_slots}
                 WHERE
                     questionid = q.id)
-            ORDER BY id
+        ORDER BY id
     ";
     if ($existingquestions = $DB->get_records_sql($sql)) {
         // Take as many of these as needed.
@@ -129,7 +136,6 @@ function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $att
                 $questiondata->options->shuffleanswers = false;
             }
             $question = question_bank::make_question($questiondata);
-
         } else {
             if (!isset($questionids[$quba->next_slot_number()])) {
                 $forcequestionid = null;

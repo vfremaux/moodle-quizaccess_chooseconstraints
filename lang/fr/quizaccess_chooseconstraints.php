@@ -17,22 +17,22 @@
 /**
  * Strings for the quizaccess_password plugin.
  *
- * @package    quizaccess
- * @subpackage chooseconstraints
- * @copyright  2016 Valery Fremaux
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Sélection de contraintes sur les questions';
-$string['chooseconstraints'] = 'Choisir l\'espace de révision';
+$string['chooseconstraints'] = 'Choisir l\'espace de tirage';
 $string['add'] = 'Ajouter ';
 $string['addrandomconstrainedquestion'] = 'une question aléatoire à contrainte';
 $string['addrandomconstrainedquestionatend'] = 'Ajouter une question à contrainte à la fin';
 $string['addrandomconstrainedquestiontopage'] = 'Ajouter une question aléatoire à contrainte à la page';
 $string['randomconstrainedquestionstoquiz'] = ' question(s) à contrainte au quiz';
-$string['choicerootcategory'] = 'Choisir la catégorie racine des révisions';
-$string['choicedeepness'] = 'Définir la profondeur de l\'arbre de révision';
+$string['choicerootcategory'] = 'Choisir la catégorie racine des tirages';
+$string['choicedeepness'] = 'Définir la profondeur d\'exploration de l\'arbre de questions';
 $string['enable'] = 'Activer le choix utilisateur';
-
