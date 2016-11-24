@@ -17,19 +17,16 @@
 /**
  * Unit tests for the userquizaccess_password plugin.
  *
- * @package    userquizaccess
- * @subpackage chooseconstraints
- * @category   phpunit
- * @copyright  2008 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
-
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot . '/mod/userquiz/accessrule/chooseconstraints/rule.php');
-
+require_once($CFG->dirroot.'/mod/userquiz/accessrule/chooseconstraints/rule.php');
 
 /**
  * Unit tests for the userquizaccess_chooseconstraints plugin.
