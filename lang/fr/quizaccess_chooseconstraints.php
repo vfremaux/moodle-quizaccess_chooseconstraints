@@ -32,6 +32,7 @@ $string['add'] = 'Ajouter ';
 $string['addrandomconstrainedquestion'] = 'une question aléatoire à contrainte';
 $string['addrandomconstrainedquestionatend'] = 'Ajouter une question à contrainte à la fin';
 $string['addrandomconstrainedquestiontopage'] = 'Ajouter une question aléatoire à contrainte à la page';
+$string['addtenrandomconstrainedquestion'] = 'dix questions aléatoires à contrainte';
 $string['randomconstrainedquestionstoquiz'] = ' question(s) à contrainte au quiz';
 $string['choicerootcategory'] = 'Choisir la catégorie racine des tirages';
 $string['choicedeepness'] = 'Définir la profondeur d\'exploration de l\'arbre de questions';

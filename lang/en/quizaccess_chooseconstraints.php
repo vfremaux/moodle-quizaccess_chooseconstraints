@@ -34,5 +34,6 @@ $string['enable'] = 'Enable user choice';
 $string['addrandomconstrainedquestion'] = 'a random constrained question';
 $string['addrandomconstrainedquestionatend'] = 'Add a random constrained question at end';
 $string['addrandomconstrainedquestiontopage'] = 'Add a random constrained question to the page';
+$string['addtenrandomconstrainedquestion'] = 'ten random constrained questions';
 $string['add'] = 'Add ';
 $string['randomconstrainedquestionstoquiz'] = ' constraint question(s) to quiz';
