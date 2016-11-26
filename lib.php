@@ -72,14 +72,20 @@ function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
     }
 
     // More random questions are needed, create them.
+    $cm = get_coursemodule_from_instance('quiz', $quiz->id);
+    $modcontext = context_module::instance($cm->id);
+
+    $defaultcategory = $DB->get_record('question_categories', array('contextid' => $modcontext->id, 'parent' => 0));
+
     for ($i = 0; $i < $number; $i += 1) {
         $form = new stdClass();
         $form->questiontext = array('text' => '0', 'format' => 0);
-        $form->category = 1;
+        $form->category = $defaultcategory->id;
         $form->defaultmark = 1;
         $form->hidden = 1;
         $form->stamp = make_unique_id_code(); // Set the unique code (not to be changed).
         $question = new stdClass();
+        $question->category = $form->category;
         $question->qtype = 'randomconstrained';
         $question = question_bank::get_qtype('randomconstrained')->save_question($question, $form);
         if (!isset($question->id)) {
