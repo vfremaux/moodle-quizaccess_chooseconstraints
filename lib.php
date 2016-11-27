@@ -23,7 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-/**
+/*
  * Add a random question to the quiz at a given point.
  * @param object $quiz the quiz settings.
  * @param int $addonpage the page on which to add the question.
