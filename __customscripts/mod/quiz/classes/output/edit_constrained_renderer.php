@@ -13,7 +13,21 @@ class edit_constrained_renderer extends edit_renderer {
 
         $str = get_string('addrandomconstrainedquestion', 'quizaccess_chooseconstraints');
         $returnurl = new \moodle_url('/mod/quiz/edit.php', array('cmid' => $structure->get_cmid(), 'data-addonpage' => $page));
-        $params = array('returnurl' => $returnurl, 'cmid' => $structure->get_cmid(), 'appendqnumstring' => 'addarandomconstrainedquestion');
+        $params = array('returnurl' => urlencode($returnurl), 'cmid' => $structure->get_cmid(), 'appendqnumstring' => 'addarandomconstrainedquestion');
+        $url = new \moodle_url('/mod/quiz/accessrule/chooseconstraints/addrandomconstrained.php', $params);
+        $icon = new \pix_icon('t/add', $str, 'moodle', array('class' => 'iconsmall', 'title' => ''));
+        $attributes = array('class' => 'cm-edit-action addarandomconstrainedquestion', 'data-action' => 'addarandomconstrainedquestion');
+        if ($page) {
+            $title = get_string('addrandomconstrainedquestiontopage', 'quizaccess_chooseconstraints', $page);
+        } else {
+            $title = get_string('addrandomconstrainedquestionatend', 'quizaccess_chooseconstraints');
+        }
+        $attributes = array_merge(array('data-header' => $title, 'data-addonpage' => $page), $attributes);
+        $actions['addarandomconstrainedquestion'] = new \action_menu_link_secondary($url, $icon, $str, $attributes);
+
+        $str = get_string('addtenrandomconstrainedquestion', 'quizaccess_chooseconstraints');
+        $returnurl = new \moodle_url('/mod/quiz/edit.php', array('cmid' => $structure->get_cmid(), 'data-addonpage' => $page));
+        $params = array('returnurl' => urlencode($returnurl), 'cmid' => $structure->get_cmid(), 'appendqnumstring' => 'addtenarandomconstrainedquestion', 'randomcount' => 10);
         $url = new \moodle_url('/mod/quiz/accessrule/chooseconstraints/addrandomconstrained.php', $params);
         $icon = new \pix_icon('t/add', $str, 'moodle', array('class' => 'iconsmall', 'title' => ''));
         $attributes = array('class' => 'cm-edit-action addarandomconstrainedquestion', 'data-action' => 'addarandomconstrainedquestion');
