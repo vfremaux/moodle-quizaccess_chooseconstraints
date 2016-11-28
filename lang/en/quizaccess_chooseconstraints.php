@@ -35,5 +35,7 @@ $string['addrandomconstrainedquestion'] = 'a random constrained question';
 $string['addrandomconstrainedquestionatend'] = 'Add a random constrained question at end';
 $string['addrandomconstrainedquestiontopage'] = 'Add a random constrained question to the page';
 $string['addtenrandomconstrainedquestion'] = 'ten random constrained questions';
+$string['addtenrandomconstrainedquestionatend'] = 'Add ten random constrained questions at end';
+$string['addtenrandomconstrainedquestiontopage'] = 'Add ten random constrained questions to the page';
 $string['add'] = 'Add ';
 $string['randomconstrainedquestionstoquiz'] = ' constraint question(s) to quiz';

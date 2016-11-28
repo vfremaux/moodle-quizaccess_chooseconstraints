@@ -32,12 +32,12 @@ class edit_constrained_renderer extends edit_renderer {
         $icon = new \pix_icon('t/add', $str, 'moodle', array('class' => 'iconsmall', 'title' => ''));
         $attributes = array('class' => 'cm-edit-action addarandomconstrainedquestion', 'data-action' => 'addarandomconstrainedquestion');
         if ($page) {
-            $title = get_string('addrandomconstrainedquestiontopage', 'quizaccess_chooseconstraints', $page);
+            $title = get_string('addtenrandomconstrainedquestiontopage', 'quizaccess_chooseconstraints', $page);
         } else {
-            $title = get_string('addrandomconstrainedquestionatend', 'quizaccess_chooseconstraints');
+            $title = get_string('addtenrandomconstrainedquestionatend', 'quizaccess_chooseconstraints');
         }
         $attributes = array_merge(array('data-header' => $title, 'data-addonpage' => $page), $attributes);
-        $actions['addarandomconstrainedquestion'] = new \action_menu_link_secondary($url, $icon, $str, $attributes);
+        $actions['addtenarandomconstrainedquestion'] = new \action_menu_link_secondary($url, $icon, $str, $attributes);
 
         return $actions;
     }
