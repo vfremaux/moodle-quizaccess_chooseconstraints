@@ -49,7 +49,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
     }
 
     public function is_preflight_check_required($attemptid) {
-        global $DB, $SESSION;
+        global $DB, $SESSION, $USER;
 
         // Check this rule is enabled for this quiz.
         if (!$this->is_enabled()) {
@@ -67,6 +67,38 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
             $SESSION->qa_constraints = $constraints;
             if (function_exists('debug_trace')) {
                 debug_trace("Setting constraints in session : ".$SESSION->qa_constraints);
+            }
+
+            if (!$attemptid) {
+                // Recalculate everytinh in order to prematurely make a new attempt.
+                $page = optional_param('page', -1, PARAM_INT);
+
+                // Look for an existing attempt.
+                $lastattempt = null;
+                if ($attempts = quiz_get_user_attempts($this->quiz->id, $USER->id, 'all', true)) {
+                    $lastattempt = end($attempts);
+                }
+                $attemptnumber = @$lastattempt->attempt + 1;
+
+                /* This will setup attempt with questions, choose final questions
+                 * for random questions, and for random constrained questions using the actual
+                 * $SESSION->qa_constraints value.
+                 */
+                $attempt = quiz_prepare_and_start_new_constrained_attempt($this->quizobj, $attemptnumber, $lastattempt);
+                // Redirect to the attempt page.
+
+                /*
+                 * We have now a valid attempt id now, so we can notify the DB of what constraints
+                 * have been used through the session.
+                 */
+                $this->notify_preflight_check_passed($attempt->id);
+
+                /*
+                 * Everything has been produced and registered. We can reset the user constraint choice.
+                 */
+                unset($SESSION->qa_constraints);
+
+                redirect($this->quizobj->attempt_url($attempt->id, $page));
             }
             return false;
         }
@@ -213,7 +245,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
         if ($attemptid) {
             $attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid));
 
-            if (!$attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid))) {
+            if (!$attempt && !empty($SESSION->qa_constraints)) {
                 $attempt = new StdClass;
                 $attempt->attemptid = $attemptid;
                 $attempt->quizid = $DB->get_field('quiz_attempts', 'quiz', array('id' => $attemptid));
