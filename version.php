@@ -20,7 +20,7 @@
  * @package     quizaccess_chooseconstraints
  * @category    quizaccess
  * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   2016 Valery Fremaux
+ * @copyright   (C) 2016 onwards Valery Fremaux
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
@@ -31,6 +31,7 @@ $plugin->requires  = 2015111000;
 $plugin->component = 'quizaccess_chooseconstraints';
 $plugin->release = '3.0.0 Build(2016062300)';
 $plugin->maturity = MATURITY_BETA;
+$plugin->dependencies = array('qtype_randomconstrained' => 2014091800);
 
 // Non moodle attributes.
 $plugin->codeincrement = '3.0.0000';

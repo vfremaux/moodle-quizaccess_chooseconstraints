@@ -17,10 +17,11 @@
 /**
  * Strings for the quizaccess_password plugin.
  *
- * @package    quizaccess
- * @subpackage chooseconstraints
- * @copyright  2011 The Open University
- * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     quizaccess_chooseconstraints
+ * @category    quizaccess
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
@@ -30,5 +31,11 @@ $string['choicerootcategory'] = 'Choose the root category for topic selection';
 $string['choicedeepness'] = 'Set the subtree deepness';
 $string['chooseconstraints'] = 'Choose the category';
 $string['enable'] = 'Enable user choice';
+$string['addrandomconstrainedquestion'] = 'a random constrained question';
+$string['addrandomconstrainedquestionatend'] = 'Add a random constrained question at end';
+$string['addrandomconstrainedquestiontopage'] = 'Add a random constrained question to the page';
+$string['addtenrandomconstrainedquestion'] = 'ten random constrained questions';
+$string['addtenrandomconstrainedquestionatend'] = 'Add ten random constrained questions at end';
+$string['addtenrandomconstrainedquestiontopage'] = 'Add ten random constrained questions to the page';
 $string['add'] = 'Add ';
 $string['randomconstrainedquestionstoquiz'] = ' constraint question(s) to quiz';
