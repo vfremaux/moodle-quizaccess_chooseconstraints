@@ -27,9 +27,15 @@
 defined('MOODLE_INTERNAL') || die();
 
 $string['pluginname'] = 'Sélection de contraintes sur les questions';
-$string['chooseconstraints'] = 'Choisir l\'espace de révision';
+$string['chooseconstraints'] = 'Choisir l\'espace de tirage';
 $string['add'] = 'Ajouter ';
+$string['addrandomconstrainedquestion'] = 'une question aléatoire à contrainte';
+$string['addrandomconstrainedquestionatend'] = 'Ajouter une question à contrainte à la fin';
+$string['addrandomconstrainedquestiontopage'] = 'Ajouter une question aléatoire à contrainte à la page';
+$string['addtenrandomconstrainedquestion'] = 'dix questions aléatoires à contrainte';
+$string['addtenrandomconstrainedquestionatend'] = 'Ajouter dix questions à contrainte à la fin';
+$string['addtenrandomconstrainedquestiontopage'] = 'Ajouter dix questions aléatoires à contrainte à la page';
 $string['randomconstrainedquestionstoquiz'] = ' question(s) à contrainte au quiz';
-$string['choicerootcategory'] = 'Choisir la catégorie racine des révisions';
-$string['choicedeepness'] = 'Définir la profondeur de l\'arbre de révision';
+$string['choicerootcategory'] = 'Choisir la catégorie racine des tirages';
+$string['choicedeepness'] = 'Définir la profondeur d\'exploration de l\'arbre de questions';
 $string['enable'] = 'Activer le choix utilisateur';

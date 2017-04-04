@@ -15,27 +15,25 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Implementaton of the quizaccess_chooseconstraints plugin.
- *
- * @package     quizaccess_chooseconstraints
- * @category    quizaccess
- * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   (C) 2010 onwards Valery Fremaux (http://www.mylearningfactory.com)
- * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package   mod_quiz
+ * @copyright 2016 Valery Fremaux
+ * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-require('../../../../config.php');
-require_once($CFG->dirroot.'/mod/quiz/accessrule/chooseconstraints/lib.php');
-require_once($CFG->dirroot.'/mod/quiz/editlib.php');
-require_once($CFG->dirroot.'/question/category_class.php');
 
-$result = question_edit_setup('editq', '/mod/quiz/accessrule/chooseconstraints/addquestion.php', true);
-list($url, $contexts, $cmid, $cm, $quiz, $pagevars) = $result;
+require_once('../../../../config.php');
+require_once($CFG->dirroot.'/mod/quiz/accessrule/chooseconstraints/lib.php');
+require_once($CFG->dirroot . '/mod/quiz/lib.php');
+require_once($CFG->dirroot . '/question/editlib.php');
+require_once($CFG->dirroot . '/question/category_class.php');
+
+$formurl = '/mod/quiz/accessrule/chooseconstraints/addrandomconstrained.php';
+list($url, $contexts, $cmid, $cm, $quiz, $pagevars) = question_edit_setup('editq', $formurl, true);
 
 require_capability('mod/quiz:manage', $contexts->lowest());
 
 // Add random questions to the quiz.
 $addonpage = optional_param('addonpage', 0, PARAM_INT);
-$randomcount = required_param('randomcount', PARAM_INT);
+$randomcount = optional_param('randomcount', 1, PARAM_INT);
 quiz_add_randomconstrained_questions($quiz, $addonpage, $randomcount);
 
 quiz_delete_previews($quiz);

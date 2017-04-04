@@ -23,7 +23,7 @@
  */
 defined('MOODLE_INTERNAL') || die();
 
-/**
+/*
  * Add a random question to the quiz at a given point.
  * @param object $quiz the quiz settings.
  * @param int $addonpage the page on which to add the question.
@@ -31,6 +31,10 @@ defined('MOODLE_INTERNAL') || die();
  * @param int $number the number of random questions to add.
  * @param bool $includesubcategories whether to include questoins from subcategories.
  */
+
+require_once($CFG->dirroot.'/mod/quiz/locallib.php');
+require_once($CFG->dirroot.'/question/type/randomconstrained/classes/bank/randomconstrained_question_loader.php');
+
 function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
     global $DB;
 
@@ -38,7 +42,7 @@ function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
      * Find existing random questions in this category that are
      * not used by any quiz.
      */
-     $sql = "
+    $sql = "
         SELECT
             q.id,
             q.qtype
@@ -56,7 +60,7 @@ function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
                     questionid = q.id)
         ORDER BY id
     ";
-    if ($existingquestions = $DB->get_records_sql ($sql)) {
+    if ($existingquestions = $DB->get_records_sql($sql)) {
         // Take as many of these as needed.
         while (($existingquestion = array_shift($existingquestions)) && $number > 0) {
             quiz_add_quiz_question($existingquestion->id, $quiz, $addonpage);
@@ -69,14 +73,20 @@ function quiz_add_randomconstrained_questions($quiz, $addonpage, $number) {
     }
 
     // More random questions are needed, create them.
+    $cm = get_coursemodule_from_instance('quiz', $quiz->id);
+    $modcontext = context_module::instance($cm->id);
+
+    $defaultcategory = $DB->get_record('question_categories', array('contextid' => $modcontext->id, 'parent' => 0));
+
     for ($i = 0; $i < $number; $i += 1) {
         $form = new stdClass();
         $form->questiontext = array('text' => '0', 'format' => 0);
-        $form->category = 1;
+        $form->category = $defaultcategory->id;
         $form->defaultmark = 1;
         $form->hidden = 1;
         $form->stamp = make_unique_id_code(); // Set the unique code (not to be changed).
         $question = new stdClass();
+        $question->category = $form->category;
         $question->qtype = 'randomconstrained';
         $question = question_bank::get_qtype('randomconstrained')->save_question($question, $form);
         if (!isset($question->id)) {
@@ -104,6 +114,43 @@ function quiz_fetch_category_tree(&$quiz, $rootcatid, &$categories, $level = 0) 
 }
 
 /**
+ * Prepare and start a new attempt deleting the previous preview attempts.
+ *
+ * @param  quiz $quizobj quiz object
+ * @param  int $attemptnumber the attempt number
+ * @param  object $lastattempt last attempt object
+ * @return object the new attempt
+ * @since  Moodle 3.1
+ */
+function quiz_prepare_and_start_new_constrained_attempt(quiz $quizobj, $attemptnumber, $lastattempt) {
+    global $DB, $USER;
+
+    // Delete any previous preview attempts belonging to this user.
+    quiz_delete_previews($quizobj->get_quiz(), $USER->id);
+
+    $quba = question_engine::make_questions_usage_by_activity('mod_quiz', $quizobj->get_context());
+    $quba->set_preferred_behaviour($quizobj->get_quiz()->preferredbehaviour);
+
+    // Create the new attempt and initialize the question sessions
+    $timenow = time(); // Update time now, in case the server is running really slowly.
+    $attempt = quiz_create_attempt($quizobj, $attemptnumber, $lastattempt, $timenow, $quizobj->is_preview_user());
+
+    if (!($quizobj->get_quiz()->attemptonlast && $lastattempt)) {
+        $attempt = quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $attemptnumber, $timenow);
+    } else {
+        $attempt = quiz_start_attempt_built_on_last($quba, $attempt, $lastattempt);
+    }
+
+    $transaction = $DB->start_delegated_transaction();
+
+    $attempt = quiz_attempt_save_started($quizobj, $quba, $attempt);
+
+    $transaction->allow_commit();
+
+    return $attempt;
+}
+
+/**
  * Start a normal, new, quiz attempt.
  *
  * @param quiz      $quizobj            the quiz object to start an attempt for.
@@ -121,6 +168,8 @@ function quiz_fetch_category_tree(&$quiz, $rootcatid, &$categories, $level = 0) 
  */
 function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $attemptnumber, $timenow,
                                 $questionids = array(), $forcedvariantsbyslot = array()) {
+    global $SESSION, $DB;
+
     // Fully load all the questions in this quiz.
     $quizobj->preload_questions();
     $quizobj->load_questions();
@@ -133,6 +182,7 @@ function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $att
                 $questiondata->options->shuffleanswers = false;
             }
             $question = question_bank::make_question($questiondata);
+
         } else {
             if (!isset($questionids[$quba->next_slot_number()])) {
                 $forcequestionid = null;
@@ -140,8 +190,13 @@ function quiz_start_new_attempt_with_constraints($quizobj, $quba, $attempt, $att
                 $forcequestionid = $questionids[$quba->next_slot_number()];
             }
 
-            $question = question_bank::get_qtype($questiondata->qtype)->choose_other_question(
-                $questiondata, $questionsinuse, $quizobj->get_quiz()->shuffleanswers, $forcequestionid);
+            if ($questiondata->qtype == 'randomconstrained') {
+                $question = question_bank::get_qtype('randomcontrained')->choose_other_question(
+                    $questiondata, $questionsinuse, $quizobj->get_quiz()->shuffleanswers, $forcequestionid);
+            } else {
+                $question = question_bank::get_qtype('random')->choose_other_question(
+                    $questiondata, $questionsinuse, $quizobj->get_quiz()->shuffleanswers, $forcequestionid);
+            }
             if (is_null($question)) {
                 throw new moodle_exception('notenoughrandomquestions', 'quiz',
                                            $quizobj->view_url(), $questiondata);

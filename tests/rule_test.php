@@ -26,7 +26,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 global $CFG;
-require_once($CFG->dirroot . '/mod/userquiz/accessrule/chooseconstraints/rule.php');
+require_once($CFG->dirroot.'/mod/userquiz/accessrule/chooseconstraints/rule.php');
 
 /**
  * Unit tests for the userquizaccess_chooseconstraints plugin.
