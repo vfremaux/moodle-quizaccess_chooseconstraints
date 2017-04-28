@@ -25,7 +25,9 @@
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Customscript type : CUSTOMSCRIPT_REPLACE.
 
+// require_once(__DIR__ . '/../../config.php');
 require_once($CFG->dirroot . '/mod/quiz/locallib.php');
 require_once($CFG->dirroot . '/mod/quiz/report/reportlib.php');
 
@@ -54,13 +56,13 @@ $PAGE->set_url($attemptobj->review_url(null, $page, $showall));
 require_login($attemptobj->get_course(), false, $attemptobj->get_cm());
 $attemptobj->check_review_capability();
 
-// CHANGE
+// CHANGE+.
+// May bypass review step after an attempt on constraints.
 if (is_dir($CFG->dirroot.'/blocks/userquiz_monitor')) {
     require_once($CFG->dirroot.'/blocks/userquiz_monitor/xlib.php');
-    check_userquiz_monitor_review_applicability($attemptobj);
+    // check_userquiz_monitor_review_applicability($attemptobj);
 }
-// CHANGE
-
+// CHANGE-.
 // Create an object to manage all the other (non-roles) access rules.
 $accessmanager = $attemptobj->get_access_manager(time());
 $accessmanager->setup_attempt_page($PAGE);
@@ -71,7 +73,8 @@ $options = $attemptobj->get_display_options(true);
 // quiz_attempt::check_file_access. If you change on, change them all.
 if ($attemptobj->is_own_attempt()) {
     if (!$attemptobj->is_finished()) {
-        redirect($attemptobj->attempt_url(null, $page));
+        // Do review.
+        // redirect($attemptobj->attempt_url(null, $page));
 
     } else if (!$options->attempt) {
         $accessmanager->back_to_view_page($PAGE->get_renderer('mod_quiz'),
@@ -267,4 +270,6 @@ echo $output->review_page($attemptobj, $slots, $page, $showall, $lastpage, $opti
 // Trigger an event for this review.
 $attemptobj->fire_attempt_reviewed_event();
 
+// CHANGE+.
 die();
+// CHANGE-.
