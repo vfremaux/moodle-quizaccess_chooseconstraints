@@ -80,7 +80,7 @@ $params = array(
 $event = \mod_quiz\event\edit_page_viewed::create($params);
 $event->trigger();
 
-// Process commands ============================================================.
+// Process commands ============================================================
 
 // Get the list of question ids had their check-boxes ticked.
 $selectedslots = array();
