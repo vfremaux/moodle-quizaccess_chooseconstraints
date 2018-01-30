@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+
 /**
  * Page to edit quizzes
  *
@@ -42,29 +43,29 @@
 // Customscript type : CUSTOMSCRIPT_CHANGE.
 
 // require_once(__DIR__.'/../../config.php');
-require_once($CFG->dirroot.'/mod/quiz/locallib.php');
-require_once($CFG->dirroot.'/mod/quiz/addrandomform.php');
-require_once($CFG->dirroot.'/question/editlib.php');
-require_once($CFG->dirroot.'/question/category_class.php');
+require_once($CFG->dirroot . '/mod/quiz/locallib.php');
+require_once($CFG->dirroot . '/mod/quiz/addrandomform.php');
+require_once($CFG->dirroot . '/question/editlib.php');
+require_once($CFG->dirroot . '/question/category_class.php');
+// CHANGE+ : Get custom renderer.
 require_once($CFG->dirroot.'/customscripts/mod/quiz/classes/output/edit_constrained_renderer.php');
+// CHANGE-.
 
-/*
- * These params are only passed from page request to request while we stay on
- * this page otherwise they would go in question_edit_setup.
- */
+// These params are only passed from page request to request while we stay on
+// this page otherwise they would go in question_edit_setup.
 $scrollpos = optional_param('scrollpos', '', PARAM_INT);
 
-list($thispageurl, $contexts, $cmid, $cm, $quiz, $pagevars) = question_edit_setup('editq', '/mod/quiz/edit.php', true);
+list($thispageurl, $contexts, $cmid, $cm, $quiz, $pagevars) =
+        question_edit_setup('editq', '/mod/quiz/edit.php', true);
 
 $defaultcategoryobj = question_make_default_categories($contexts->all());
-$defaultcategory = $defaultcategoryobj->id.','.$defaultcategoryobj->contextid;
+$defaultcategory = $defaultcategoryobj->id . ',' . $defaultcategoryobj->contextid;
 
 $quizhasattempts = quiz_has_attempts($quiz->id);
 
 $PAGE->set_url($thispageurl);
 
 // Get the course object and related bits.
-
 $course = $DB->get_record('course', array('id' => $quiz->course), '*', MUST_EXIST);
 $quizobj = new quiz($quiz, $cm, $course);
 $structure = $quizobj->get_structure();
@@ -125,8 +126,7 @@ if (optional_param('add', false, PARAM_BOOL) && confirm_sesskey()) {
     $addonpage = optional_param('addonpage', 0, PARAM_INT);
     // Add selected questions to the current quiz.
     $rawdata = (array) data_submitted();
-    foreach ($rawdata as $key => $value) {
-        // Parse input for question ids.
+    foreach ($rawdata as $key => $value) { // Parse input for question ids.
         if (preg_match('!^q([0-9]+)$!', $key, $matches)) {
             $key = $matches[1];
             quiz_require_question_use($key);
