@@ -70,7 +70,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
             }
 
             if (!$attemptid) {
-                // Recalculate everytinh in order to prematurely make a new attempt.
+                // Recalculate everything in order to prematurely make a new attempt.
                 $page = optional_param('page', -1, PARAM_INT);
 
                 // Look for an existing attempt.
@@ -103,8 +103,11 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
             return false;
         }
 
-        $attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid));
-        return empty($attempt->categories);
+        if ($attemptid) {
+            $attempt = $DB->get_record('qa_chooseconstraints_attempt', array('attemptid' => $attemptid));
+            return empty($attempt->categories);
+        }
+        return false;
     }
 
     public static function add_settings_form_fields(mod_quiz_mod_form $quizform, MoodlequickForm $mform) {
@@ -115,6 +118,7 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
         $thiscontext = context_course::instance($COURSE->id);
         $contexts = new question_edit_contexts($thiscontext);
 
+        $qoptions = array();
         if ($categoriesarray = question_category_options($contexts->all(), true, 0, false, -1)) {
             foreach ($categoriesarray as $catname => $catsection) {
                 $i = 0;
@@ -130,10 +134,12 @@ class quizaccess_chooseconstraints extends quiz_access_rule_base {
         }
         $label = get_string('choicerootcategory', 'quizaccess_chooseconstraints');
         $mform->addElement('select', 'choicerootcategory', $label, $qoptions);
+        $mform->disabledIf('choicerootcategory', 'choicerootenabled', 'notchecked');
 
         $doptions = array('0' => get_string('unlimited'), '1' => 1, '2' => 2, '3' => 3);
         $label = get_string('choicedeepness', 'quizaccess_chooseconstraints');
         $mform->addElement('select', 'choicedeepness', $label, $doptions);
+        $mform->disabledIf('choicedeepness', 'choicerootenabled', 'notchecked');
     }
 
     /**

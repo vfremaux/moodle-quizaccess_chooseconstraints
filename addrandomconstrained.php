@@ -34,6 +34,7 @@ require_capability('mod/quiz:manage', $contexts->lowest());
 // Add random questions to the quiz.
 $addonpage = optional_param('addonpage', 0, PARAM_INT);
 $randomcount = optional_param('randomcount', 1, PARAM_INT);
+// Quiz is the course module + the module name.
 quiz_add_randomconstrained_questions($quiz, $addonpage, $randomcount);
 
 quiz_delete_previews($quiz);
