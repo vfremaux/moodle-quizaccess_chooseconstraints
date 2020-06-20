@@ -26,6 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+// Privacy.
+$string['privacy:metadata'] = 'The Chooseconstraints Access Rule plugin does not store any personal data about any user.';
+
 $string['pluginname'] = 'Choose question constraints access rule';
 $string['choicerootcategory'] = 'Choose the root category for topic selection';
 $string['choicedeepness'] = 'Set the subtree deepness';
