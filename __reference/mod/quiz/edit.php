@@ -80,7 +80,7 @@ $params = array(
 $event = \mod_quiz\event\edit_page_viewed::create($params);
 $event->trigger();
 
-// Process commands ============================================================
+// Process commands ============================================================.
 
 // Get the list of question ids had their check-boxes ticked.
 $selectedslots = array();
@@ -159,8 +159,8 @@ if ((optional_param('addrandom', false, PARAM_BOOL)) && confirm_sesskey()) {
 if (optional_param('savechanges', false, PARAM_BOOL) && confirm_sesskey()) {
 
     // If rescaling is required save the new maximum.
-    $maxgrade = unformat_float(optional_param('maxgrade', -1, PARAM_RAW));
-    if ($maxgrade >= 0) {
+    $maxgrade = unformat_float(optional_param('maxgrade', '', PARAM_RAW_TRIMMED), true);
+    if (is_float($maxgrade) && $maxgrade >= 0) {
         quiz_set_grade($maxgrade, $quiz);
         quiz_update_all_final_grades($quiz);
         quiz_update_grades($quiz, 0, true);
